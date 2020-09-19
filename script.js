@@ -21,78 +21,80 @@
 //TODO: save the data from local storage to the textarea 
 
 
-// var showDate = $("#currentDay").text.
 
 //feeding time and date information from moment.js and place date info to html
-var date 
+var date
 var hour
 $.ajax({
   url: "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js",
   method: "GET"
-}).then(function(logDate) {
- date = moment().format('MMMM Do YYYY, h:mm:ss a');
- hour = moment().format('H');
- console.log(hour);
-$("#currentDay").text(date)
+}).then(function (logDate) {
+  date = moment().format('MMMM Do YYYY, h:mm:ss a');
+  hour = moment().format('H');
+  console.log(hour);
+  colorTimeSlot($(".row"), hour)
+  $("#currentDay").text(date)
 })
 
-
 // creat time table for the table layout with each row by hour using JQ to assign each html elements
+
+var timeArr = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM"]
+var t;
+for (t = 0; t < timeArr.length; t++) {
+  console.log(timeArr[t]);
+  var textAreaName = "#textarea"+timeArr[t]
+
+  var row = $('<section class="row time-block"></section>');
+  var timeSlot = $('<time class="col-md-1 hour"></time>');
+  var textArea = $('<textarea id="'+textAreaName+'"class="col-md-10"></textarea>');
+  var button = $('<buton class="col-md-1 saveBtn">SAVE</buton>').click(function(){
+    textAreaNameinternal = "temp";
+    localStorage.setItem(textAreaNameinternal, $(textAreaNameinternal).text)
+    alert(textAreaNameinternal)
+  });
+  button.textAreaNameinternal = textAreaName;
+
+  row.append(timeSlot);
+  row.append(textArea);
+  row.append(button);
+
+  timeSlot.text(timeArr[t]);
+
+  console.log($(".container").append(row));
+}
+
+//set time compare to color code each time slot. Time starts at 9am and loop until 6pm
+function timeCheck(){
+  var current = parseInt(moment().format("HH"));
   
- var timeArr = ["9AM","10AM","11AM","12PM","1PM","2PM","3PM","4PM","5PM","6PM"]
- var t;
- for(t = 0; t < timeArr.length; t++){
-  console.log(timeArr[t])
-
-var row = $('<section class="row time-block"></section>')
-var timeSlot = $('<time class="col-md-2 hour"></time>')
-var textArea = $('<textarea class="col-md-8 past"></textarea>')
-var button = $('<buton class="col-md-2 saveBtn"></buton>')
-
-row.append(timeSlot)
-row.append(textArea)
-row.append(button)
-
-timeSlot.text(timeArr[t])
-
- console.log($(".container").append(row))
 }
 
 
-hour = "12"
-timeSelArr = $((".row"));
 
+
+//setting up an var for fixedTime minus 9 to corresponding to array index no. of calendar time slot
+//for each if statement the index [i] will be compared to the fixedTime to determine if its past, present or future.
 function colorTimeSlot(timeArr, date){
   var fixedTime = parseInt(date)-9;
 for (var i = 0; i<timeArr.length; i++){
   timeArr[i].children[1].classList.remove("past");
   timeArr[i].children[1].classList.remove("future");
   timeArr[i].children[1].classList.remove("present");
-  if(i!=fixedTime){
-  timeArr[i].children[1].classList.add(i<fixedTime  ? "past" : "future");
+  //remove all pre-assigned css class for color setting "past","future","present"
+  if(i==fixedTime){
+  timeArr[i].children[1].classList.add("present");
   }
+  if(i<fixedTime){
+  timeArr[i].children[1].classList.add("past");
+  }
+  if(i>fixedTime){
+    timeArr[i].children[1].classList.add("future");
+    }
 }
-  timeArr[fixedTime].children[1].classList.add("present");
-
-}
-
-
-colorTimeSlot(timeSelArr, hour)
-
-
-
-var timeInterval = setInterval(timeCheck,1000);
-
-
-
-function timeCheck(){
-  
 }
 
 
-
-
-// To be used code
+// // To be used code
 // localStorage.setItem("test", "My first note")
 // licalStorage.setItem("test1", "My second note")
 
