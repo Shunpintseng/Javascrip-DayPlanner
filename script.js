@@ -42,17 +42,56 @@ var timeArr = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM",
 var t;
 for (t = 0; t < timeArr.length; t++) {
   console.log(timeArr[t]);
-  var textAreaName = "#textarea"+timeArr[t]
-
+  
   var row = $('<section class="row time-block"></section>');
   var timeSlot = $('<time class="col-md-1 hour"></time>');
-  var textArea = $('<textarea id="'+textAreaName+'"class="col-md-10"></textarea>');
-  var button = $('<buton class="col-md-1 saveBtn">SAVE</buton>').click(function(){
-    textAreaNameinternal = "temp";
-    localStorage.setItem(textAreaNameinternal, $(textAreaNameinternal).text)
-    alert(textAreaNameinternal)
-  });
-  button.textAreaNameinternal = textAreaName;
+  var textArea = $('<textarea class="col-md-10"></textarea>');
+  var button = $('<buton class="col-md-1 saveBtn">SAVE</buton>')
+  
+
+
+
+
+
+
+
+
+  var textAreaName = "#textarea"+timeArr[t]
+
+  var buttonObj = {
+
+
+    textAreaNameinternal : "hola",
+    foo(){alert(this)
+    localStorage.setItem(this.textAreaNameinternal, $(this.textAreaNameinternal).text)
+    
+  }
+  
+}
+
+buttonObj.foo()
+
+
+
+//buttonObj.textAreaNameinternal = textAreaName;
+button.click(buttonObj.foo);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // $("button").hover(function(){
+  //   $(this).css("saveBtn i:hover")
+  //   });
 
   row.append(timeSlot);
   row.append(textArea);
@@ -63,14 +102,7 @@ for (t = 0; t < timeArr.length; t++) {
   console.log($(".container").append(row));
 }
 
-//set time compare to color code each time slot. Time starts at 9am and loop until 6pm
-function timeCheck(){
-  var current = parseInt(moment().format("HH"));
-  
-}
-
-
-
+var saveButton = 
 
 //setting up an var for fixedTime minus 9 to corresponding to array index no. of calendar time slot
 //for each if statement the index [i] will be compared to the fixedTime to determine if its past, present or future.
@@ -80,6 +112,7 @@ for (var i = 0; i<timeArr.length; i++){
   timeArr[i].children[1].classList.remove("past");
   timeArr[i].children[1].classList.remove("future");
   timeArr[i].children[1].classList.remove("present");
+  
   //remove all pre-assigned css class for color setting "past","future","present"
   if(i==fixedTime){
   timeArr[i].children[1].classList.add("present");
@@ -102,3 +135,7 @@ for (var i = 0; i<timeArr.length; i++){
 // $(".first").text(txFromStorage)
 
 // console.log(moment().format("h A")
+
+
+
+
